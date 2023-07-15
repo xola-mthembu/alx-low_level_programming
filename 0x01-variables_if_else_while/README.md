@@ -1,0 +1,1 @@
+Project Description:  Its purpose was to explore and grasp concepts related to arithmetic operators, relational operators, boolean operators, comments, variable declaration, and loops in the C language.

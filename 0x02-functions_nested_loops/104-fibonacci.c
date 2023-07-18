@@ -6,17 +6,14 @@
  */
 int main(void)
 {
-int i;
-unsigned long int fib1, fib2, fib3;
-fib1 = 1; /* First Fibonacci number */
-fib2 = 2; /* Second Fibonacci number */
-printf("%lu, %lu", fib1, fib2); /* Print the first two Fibonacci numbers */
+int i, n1 = 1, n2 = 2, next;
+printf("1, 2, ");
 for (i = 3; i <= 98; i++)
 {
-fib3 = fib1 + fib2; /* Calculate the next Fibonacci number */
-printf(", %lu", fib3); /* Print the Fibonacci number */
-fib1 = fib2; /* Update the previous Fibonacci number */
-fib2 = fib3; /* Update the current Fibonacci number */
+next = n1 + n2;
+printf("%d, ", next);
+n1 = n2;
+n2 = next;
 }
 printf("\n");
 return (0);

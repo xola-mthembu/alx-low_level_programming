@@ -1,4 +1,10 @@
 #include "main.h"
+/**
+ * print_times_table - Prints the n times table, starting with 0
+ * @n: Number of times table (0 to 15)
+ *
+ * Return: void
+ */
 void print_times_table(int n)
 {
 int i, j, k;

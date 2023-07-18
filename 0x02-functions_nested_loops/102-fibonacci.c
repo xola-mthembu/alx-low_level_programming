@@ -6,7 +6,7 @@
  */
 int main(void)
 {
-int i, n;
+int i;
 long int prev, current, next;
 prev = 1;   /* First Fibonacci number */
 current = 2;    /* Second Fibonacci number */

@@ -7,26 +7,26 @@
  */
 int main(void)
 {
-long int n;
-long int max;
-long int i;
-n = 612852475143;
-max = -1;
-while (n % 2 == 0)
+long int number;
+long int max_prime_factor;
+long int divisor;
+number = 612852475143;
+max_prime_factor = -1;
+while (number % 2 == 0)
 {
-max = 2;
-n /= 2;
+max_prime_factor = 2;
+number /= 2;
 }
-for (i = 3; i <= sqrt(n); i = i + 2)
+for (divisor = 3; divisor <= sqrt(number); divisor = divisor + 2)
 {
-while (n % i == 0)
+while (number % divisor == 0)
 {
-max = i;
-n = n / i;
+max_prime_factor = divisor;
+number = number / divisor;
 }
 }
-if (n > 2)
-max = n;
-printf("%ld\n", max);
+if (number > 2)
+max_prime_factor = number;
+printf("%ld\n", max_prime_factor);
 return (0);
 }

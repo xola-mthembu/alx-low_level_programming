@@ -8,28 +8,28 @@
  */
 int main(void)
 {
-int i;
-for (i = 1; i <= 100; i++)
+int current_number;
+for (current_number = 1; current_number <= 100; current_number++)
 {
-if (i % 3 == 0 && i % 5 != 0)
+if (current_number % 3 == 0 && current_number % 5 != 0)
 {
 printf(" Fizz");
 }
-else if (i % 5 == 0 && i % 3 != 0)
+else if (current_number % 5 == 0 && current_number % 3 != 0)
 {
 printf(" Buzz");
 }
-else if (i % 3 == 0 && i % 5 == 0)
+else if (current_number % 3 == 0 && current_number % 5 == 0)
 {
 printf(" FizzBuzz");
 }
-else if (i == 1)
+else if (current_number == 1)
 {
-printf("%d", i);
+printf("%d", current_number);
 }
 else
 {
-printf(" %d", i);
+printf(" %d", current_number);
 }
 }
 printf("\n");

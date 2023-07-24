@@ -11,7 +11,7 @@ int index = 0;
 while (str[index] != '\0')
 {
 _putchar(str[index]);
-index += 2; /* Move to the next character (skip one character) */
+index += 2;
 }
 _putchar('\n');
 }

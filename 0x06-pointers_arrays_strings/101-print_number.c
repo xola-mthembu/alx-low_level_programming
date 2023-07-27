@@ -1,36 +1,22 @@
 #include "main.h"
-#include <stdio.h>
 /**
- * print_number - Prints an integer using _putchar.
- * @n: The integer to be printed.
+ * print_number - Prints an integer
+ * @n: Integer to be printed
+ *
+ * Description: This function prints an integer to the standard output.
+ * If the integer is negative, it prints a minus sign before the number.
+ * It does not use arrays or pointers.
+ * It uses the _putchar function to print the characters.
  */
 void print_number(int n)
 {
-if (n == 0)
-{
-_putchar('0');
-return;
-}
+unsigned int num = n;
 if (n < 0)
 {
 _putchar('-');
-n = -n;
+num = -num;
 }
-int num_digits = 0;
-int temp = n;
-while (temp != 0)
-{
-num_digits++;
-temp /= 10;
-}
-int divisor = 1;
-int i;
-for (i = 1; i < num_digits; i++)
-divisor *= 10;
-while (divisor != 0)
-{
-_putchar((n / divisor) +'0');
-n %= divisor;
-divisor /= 10;
-}
+if ((num / 10) > 0)
+print_number(num / 10);
+_putchar((num % 10) + '0');
 }

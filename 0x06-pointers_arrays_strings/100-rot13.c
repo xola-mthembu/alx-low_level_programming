@@ -8,20 +8,20 @@
  */
 char *rot13(char *str)
 {
-char *ptr = str;
-char *rot13_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-char *rot13_replacements = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+char *p = str;
+char *from = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+char *to = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 int i, j;
-for (i = 0; str[i] != '\0'; i++)
+for (i = 0; str[i]; i++)
 {
-for (j = 0; rot13_chars[j] != '\0'; j++)
+for (j = 0; from[j]; j++)
 {
-if (str[i] == rot13_chars[j])
+if (str[i] == from[j])
 {
-str[i] = rot13_replacements[j];
+str[i] = to[j];
 break;
 }
 }
 }
-return (ptr);
+return (p);
 }

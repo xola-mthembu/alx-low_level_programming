@@ -19,7 +19,7 @@ return (1);
 num1 = atoi(argv[1]);
 num2 = atoi(argv[2]);
 /* Perform multiplication */
-result = num1 * num2;
+result = num1 *num2;
 /* Print the result */
 printf("%d\n", result);
 return (0);

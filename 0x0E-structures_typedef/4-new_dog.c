@@ -1,34 +1,50 @@
-#include <stdio.h>
+#include "dog.h"
 #include <stdlib.h>
 #include <string.h>
-#include "dog.h"
 /**
- * new_dog - Creates a new dog with given information
+ * _strdup - Returns a pointer to a newly allocated space in memory,
+ *           containing a copy of the string given as a parameter.
+ * @str: The string to be duplicated
+ * Return: Pointer to the duplicated string or NULL if error
+ */
+char *_strdup(char *str)
+{
+size_t len;
+char *dup;
+if (!str)
+return (NULL);
+len = strlen(str);
+dup = malloc(len + 1);
+if (!dup)
+return (NULL);
+strcpy(dup, str);
+return (dup);
+}
+/**
+ * new_dog - Creates a new dog structure
  * @name: Name of the dog
  * @age: Age of the dog
- * @owner: Name of the dog's owner
- *
- * Return: Pointer to the new dog_t structure,
- * or NULL if memory allocation fails
+ * @owner: Owner of the dog
+ * Return: Pointer to the new dog structure, or NULL on failure
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-dog_t *new_dog = malloc(sizeof(dog_t));
-if (new_dog == NULL)
+dog_t *doggo = malloc(sizeof(dog_t));
+if (!doggo)
 return (NULL);
-new_dog->name = strdup(name);
-if (new_dog->name == NULL)
+doggo->name = _strdup(name);
+if (!doggo->name)
 {
-free(new_dog);
+free(doggo);
 return (NULL);
 }
-new_dog->age = age;
-new_dog->owner = strdup(owner);
-if (new_dog->owner == NULL)
+doggo->owner = _strdup(owner);
+if (!doggo->owner)
 {
-free(new_dog->name);
-free(new_dog);
+free(doggo->name);
+free(doggo);
 return (NULL);
 }
-return (new_dog);
+doggo->age = age;
+return (doggo);
 }

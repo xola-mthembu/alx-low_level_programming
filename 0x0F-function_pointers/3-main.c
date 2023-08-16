@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include "3-calc.h"
 #include "function_pointers.h"
+/**
+ * main - Entry point of the program
+ * @argc: Number of command-line arguments
+ * @argv: Array of command-line arguments
+ *
+ * Return: Always 0 (Success)
+ */
 int main(int argc, char *argv[])
 {
 int num1, num2, result;

@@ -14,6 +14,11 @@ char sep = '\0';
 va_start(args, format);
 while (format && format[i])
 {
+if (sep != '\0')
+{
+printf("%c ", sep);
+}
+sep = ',';
 switch (format[i])
 {
 case 'c':
@@ -30,14 +35,12 @@ str = va_arg(args, char *);
 if (str == NULL)
 str = "(nil)";
 printf("%s", str);
+sep = '\0';
 break;
 default:
-sep = ',';
+sep = '\0';
 break;
 }
-if (format[i + 1] && sep != '\0')
-printf("%c ", sep);
-sep = '\0';
 i++;
 }
 va_end(args);

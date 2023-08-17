@@ -15,9 +15,7 @@ va_start(args, format);
 while (format && format[i])
 {
 if (sep != '\0')
-{
 printf("%c ", sep);
-}
 sep = ',';
 switch (format[i])
 {
@@ -33,7 +31,8 @@ break;
 case 's':
 str = va_arg(args, char *);
 if (str == NULL)
-str = "(nil)";
+printf("(nil)");
+else
 printf("%s", str);
 sep = '\0';
 break;

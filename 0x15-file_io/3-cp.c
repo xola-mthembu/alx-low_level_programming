@@ -1,82 +1,56 @@
 #include "main.h"
 /**
- * handle_open_error - Handles errors during file opening
- * @file_from: The file descriptor of file_from
- * @file_to: The file descriptor of file_to
- * @name_from: The name of file_from
- * @name_to: The name of file_to
- */
-void handle_open_error(int file_from, int file_to, char *name_from, char *name_to)
-{
-	if (file_from == -1)
-		dprintf(2, "Error: Can't read from file %s\n", name_from);
-	if (file_to == -1)
-		dprintf(2, "Error: Can't write to %s\n", name_to);
-
-	close(file_from);
-	close(file_to);
-	exit(file_from == -1 ? 98 : 99);
-}
-/**
- * handle_write_error - Handles errors during file writing
- * @file_from: The file descriptor of file_from
- * @file_to: The file descriptor of file_to
- */
-void handle_write_error(int file_from, int file_to)
-{
-	dprintf(2, "Error: Can't write to file\n");
-	close(file_from);
-	close(file_to);
-	exit(99);
-}
-/**
- * close_files - Closes file descriptors and exits on error
- * @file_from: The file descriptor of file_from
- * @file_to: The file descriptor of file_to
- */
-void close_files(int file_from, int file_to)
-{
-	int close_from = close(file_from);
-	int close_to = close(file_to);
-
-	if (close_from == -1 || close_to == -1)
-	{
-		dprintf(2, "Error: Can't close file descriptor\n");
-		exit(100);
-	}
-}
-/**
- * main - Copies the content of a file to another file
- * @argc: The number of arguments
- * @argv: The array of arguments
+ * print_error - Print an error message to standard error.
+ * @exit_code: The exit code.
+ * @format: The format string for the error message.
  *
- * Return: 0 on success, otherwise exit codes as specified
+ * Return: void
  */
-int main(int argc, char *argv[])
+void print_error(int exit_code, const char *format, ...)
 {
-	int file_from, file_to;
+	va_list args;
+
+	va_start(args, format);
+	dprintf(STDERR_FILENO, format, args);
+	va_end(args);
+
+	exit(exit_code);
+}
+/**
+ * main - Entry point for the program.
+ * @ac: The number of command-line arguments.
+ * @av: An array of strings containing the command-line arguments.
+ *
+ * Return: 0 on success, other values on failure.
+ */
+int main(int ac, char **av)
+{
+	int file_from, file_to, read_status, write_status;
 	char buffer[1024];
-	ssize_t bytes_read, bytes_written;
 
-	if (argc != 3)
-		dprintf(2, "Usage: %s file_from file_to\n", argv[0]), exit(97);
+	if (ac != 3)
+		print_error(97, "Usage: %s file_from file_to\n", av[0]);
 
-	file_from = open(argv[1], O_RDONLY);
-	file_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+	file_from = open(av[1], O_RDONLY);
+	if (file_from == -1)
+		print_error(98, "Error: Can't read from file %s\n", av[1]);
 
-	if (file_from == -1 || file_to == -1)
-		handle_open_error(file_from, file_to, argv[1], argv[2]);
+	file_to = open(av[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (file_to == -1)
+		print_error(99, "Error: Can't write to %s\n", av[2]);
 
-	do {
-		bytes_read = read(file_from, buffer, sizeof(buffer));
-		bytes_written = write(file_to, buffer, bytes_read);
+	while ((read_status = read(file_from, buffer, 1024)) > 0)
+	{
+		write_status = write(file_to, buffer, read_status);
+		if (write_status == -1 || (size_t)write_status != (size_t)read_status)
+			print_error(99, "Error: Can't write to %s\n", av[2]);
+	}
 
-		if (bytes_read == -1 || bytes_written == -1 || bytes_written != bytes_read)
-			handle_write_error(file_from, file_to);
+	if (read_status == -1)
+		print_error(98, "Error: Can't read from file %s\n", av[1]);
 
-	} while (bytes_read > 0);
-
-	close_files(file_from, file_to);
+	if (close(file_from) == -1 || close(file_to) == -1)
+		print_error(100, "Error: Can't close fd %d\n", (file_from == -1) ? file_to : file_from);
 
 	return (0);
 }

@@ -1,20 +1,16 @@
-#include "lists.h"
+#ifndef LISTS_H
+#define LISTS_H
 
-/**
- * dlistint_len - returns the number of elements in a linked dlistint_t list
- * @h: pointer to the head of the doubly linked list
- *
- * Return: the number of elements
- */
-size_t dlistint_len(const dlistint_t *h)
+#include <stdlib.h>
+
+typedef struct dlistint_s
 {
-	size_t count = 0;
+	int n;
+	struct dlistint_s *prev;
+	struct dlistint_s *next;
+} dlistint_t;
 
-	while (h != NULL)
-	{
-		h = h->next;
-		count++;
-	}
+size_t print_dlistint(const dlistint_t *h);
+size_t dlistint_len(const dlistint_t *h);
 
-	return (count);
-}
+#endif /* LISTS_H */

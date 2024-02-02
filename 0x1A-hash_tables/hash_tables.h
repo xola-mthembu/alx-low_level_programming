@@ -23,9 +23,8 @@ typedef struct hash_node_s
  * struct hash_table_s - Hash table data structure
  * @size: The size of the array
  * @array: An array of size @size
- *         Each cell of this array is a pointer to the first node of a linked
- *         list, because we want our HashTable to use a Chaining collision
- *         handling
+ *         Each cell of this array is a pointer to the 1st node of a lnkd list,
+ *         because we want our HashTable to use a Chaining collision handling
  */
 typedef struct hash_table_s
 {
@@ -35,5 +34,8 @@ typedef struct hash_table_s
 
 /* Prototype for creating a new hash table */
 hash_table_t *hash_table_create(unsigned long int size);
+
+/* Prototype for the djb2 hash function */
+unsigned long int hash_djb2(const unsigned char *str);
 
 #endif /* HASH_TABLES_H */

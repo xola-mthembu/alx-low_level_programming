@@ -1,9 +1,10 @@
+#include <stdio.h>
+#include "m.h"
+
 /**
- * function_name - a function that does nothing (stub)
- *
- * Return: 0
+ * print_school - Prints "School" followed by a new line
  */
-int function_name(void)
+void print_school(void)
 {
-	return (0);
+	printf("School\n");
 }

@@ -1,28 +1,12 @@
-NAME = school
 CC = gcc
-SRC = $(wildcard *.c)
+SRC = main.c school.c
 OBJ = $(SRC:.c=.o)
-CFLAGS = -Wall -Werror -Wextra -pedantic
+NAME = school
 RM = rm -f
+CFLAGS = -Wall -Werror -Wextra -pedantic
 
-# Dummy rule to satisfy the requirement of not directly setting $(RM)
-define RM_OBJ
-$(RM) $(OBJ)
-endef
-
-# Dummy rule for using $(CC) once
-define COMPILE
-$(CC) $(CFLAGS) -c $^ -o $@
-endef
-
-# The rule for making the .o files indirectly
-%.o: %.c m.h
-	@$(COMPILE)
-
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $(NAME)
-
-all: $(NAME)
+all: $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 clean:
 	$(RM) *~ $(NAME)
@@ -30,9 +14,8 @@ clean:
 oclean:
 	$(RM) $(OBJ)
 
-fclean: clean
-	@$(RM_OBJ)
+fclean: clean oclean
 
 re: fclean all
 
-.PHONY: all clean fclean oclean re
+.PHONY: all clean oclean fclean re

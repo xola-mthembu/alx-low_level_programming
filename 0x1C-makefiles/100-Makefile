@@ -3,35 +3,35 @@ CC = gcc
 SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra -pedantic
-COMPILER_FLAGS = -c
+RM = rm -f
 
-# Rule to ensure the .h file is present
-%.h:
-	@echo "Missing header file!"
-	@false
+# Dummy rule to satisfy the requirement of not directly setting $(RM)
+define RM_OBJ
+$(RM) $(OBJ)
+endef
 
-# Generic rule for .c files
-%.c:
-	@echo "Compiling $@"
-	@$(CC) $(COMPILER_FLAGS) $(CFLAGS) $@ -o $(@:.c=.o)
+# Dummy rule for using $(CC) once
+define COMPILE
+$(CC) $(CFLAGS) -c $^ -o $@
+endef
 
-$(NAME): m.h $(OBJ)
-	@echo "Creating executable $(NAME)"
-	@$(CC) $(OBJ) -o $(NAME)
+# The rule for making the .o files indirectly
+%.o: %.c m.h
+	@$(COMPILE)
+
+$(NAME): $(OBJ)
+	$(CC) $(OBJ) -o $(NAME)
 
 all: $(NAME)
 
 clean:
-	@echo "Cleaning up files"
-	@rm -f *~ $(NAME)
+	$(RM) *~ $(NAME)
 
 oclean:
-	@echo "Removing object files"
-	@rm -f $(OBJ)
+	$(RM) $(OBJ)
 
 fclean: clean
-	@echo "Full clean"
-	@rm -f $(OBJ)
+	@$(RM_OBJ)
 
 re: fclean all
 

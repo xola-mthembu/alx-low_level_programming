@@ -1,41 +1,11 @@
-#include <stdlib.h>
-
-/**
- * allocate_map - Allocates memory for a 2D array of integers.
- * @n: Number of rows in the 2D array.
- * @m: Number of columns in each row of the 2D array.
- *
- * Description: Allocates a 2D array where each element is an integer.
- * The function first allocates memory for an array of integer pointers,
- * each representing a row. Then for each row, it allocates memory
- * sufficient to hold 'm' integers. The function returns a pointer to
- * the array of pointers (the 2D array).
- *
- * Return: Pointer to the allocated 2D array.
- * If memory allocation fails at any point, the function returns NULL.
- */
 int **allocate_map(int n, int m)
 {
 	int **map;
-	size_t i;
 
 	map = malloc(sizeof(int *) * n);
-	if (map == NULL)
-		return (NULL);
-
-	for (i = 0; i < n; i++)
+	for (size_t i = 0; i < n; i++)
 	{
 		map[i] = malloc(sizeof(int) * m);
-		if (map[i] == NULL)
-		{
-			/* Free previously allocated memory if allocation fails */
-			while (i > 0)
-			{
-				free(map[--i]);
-			}
-			free(map);
-			return (NULL);
-		}
 	}
 	return (map);
 }
